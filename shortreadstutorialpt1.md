@@ -1,7 +1,7 @@
 # Tutorial for the Analysis of Shotgun Metagenomics (Short-Reads) Data for Environmental Microbiology
 I wrote this tutorial for my fellow lab members (Sylvan lab and Smith lab) to follow along as we transition into analyzing more metagenomes in our work.  I hope that this will help you! :)  
 
-##### The tutorial is made of several sections and after the assembly, you can follow the path of binning, or working with contigs without binning, or both.
+##### I've been writing code offline for a long time and I'm finally making them live on Github! I plan to add the full tutorial in a few weeks!  The tutorial will be made of several sections, and after the Part 2 on assembly, you can follow the path of binning, or work with contigs without binning, or both.
 
 ## Part 1: Quality control on raw reads  
 ### Tools
@@ -36,7 +36,7 @@ Use your FastQC report to guide your filtering and trimming parameters in Fastp.
 
 This is an example of my parameters in Fastp, but I would not blindly copy these. They might not apply exactly to your different samples. I trimmed 15 bp from the left (trim_front), and also had it quality-trimmed from the right (cut_right), based on how my reads looked in "Per base sequence content" in FastQC.  I also had overrepresented sequences and adapter content detected. You might not be able to address all the issues that FastQC flags (meaning sometimes you have to proceed even with warnings post-QC), but you can try your best to address most of them. 
 
-I also pair it with fastqc at the end to do a post-trimming QC  
+I also pair it with fastqc at the end to do a post-trimming QC. 
 ```bash
 fastp -i /data/raw/S01_R1.fastq.gz -I /data/raw/S01_R2.fastq.gz -o S01_trim_R1.fastq.gz -O S01_trim_R2.fastq.gz --detect_adapter_for_pe --overrepresentation_analysis --dedup --trim_front1 15 --trim_front2 15 --trim_poly_g --max_len1 150 --max_len2 150 --correction --cut_window_size 5 --cut_mean_quality 20 --cut_right --length_required 100 --thread 16 --html S01_trim.fastp.html --json S01_trim.fastp.json && fastqc S01_trim_R1.fastq.gz S01_trim_R2.fastq.gz -t 16
 ```
